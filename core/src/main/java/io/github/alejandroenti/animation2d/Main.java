@@ -12,13 +12,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
 
-    private static final int FRAME_COLS = 16;
+    private static final int FRAME_COLS = 8;
 
     private SpriteBatch batch;
     private FitViewport viewport;
 
-    private Animation<TextureRegion> wakeupAnimation;
-    private Texture wakeupTexture;
+    private Animation<TextureRegion> walkAnimation;
+    private Texture walkTexture;
     private float stateTime;
 
 
@@ -27,13 +27,13 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
         viewport = new FitViewport(8, 5);
 
-        wakeupTexture = new Texture(Gdx.files.internal("Bat-WakeUp.png"));
-        TextureRegion[][] wakeupFrames = TextureRegion.split(wakeupTexture,
-            wakeupTexture.getWidth() / FRAME_COLS,
-            wakeupTexture.getHeight()
+        walkTexture = new Texture(Gdx.files.internal("walking.png"));
+        TextureRegion[][] wakeupFrames = TextureRegion.split(walkTexture,
+            walkTexture.getWidth() / FRAME_COLS,
+            walkTexture.getHeight()
             );
 
-        wakeupAnimation = new Animation<TextureRegion>(0.025f, wakeupFrames[0]);
+        walkAnimation = new Animation<TextureRegion>(0.1f, wakeupFrames[0]);
 
         stateTime = 0f;
     }
@@ -43,7 +43,7 @@ public class Main extends ApplicationAdapter {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
 
         stateTime += Gdx.graphics.getDeltaTime();
-        TextureRegion currentFrame = wakeupAnimation.getKeyFrame(stateTime, true);
+        TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 
         batch.begin();
 
@@ -55,6 +55,6 @@ public class Main extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
-        wakeupTexture.dispose();
+        walkTexture.dispose();
     }
 }
